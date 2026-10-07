@@ -369,6 +369,36 @@
     document.getElementById('birthday-year').textContent = today.getFullYear();
     document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
+    // --- image gallery hover effect ---
+    const galleryImages = [
+      "https://res.cloudinary.com/djksfayfu/image/upload/v1791364575/07043dcba2b244679f257237836be1b6_fmqd7v.jpg",
+      "https://res.cloudinary.com/djksfayfu/image/upload/v1791364605/cb499a52234a4e68b5b5d8077b4d25ba_emhbxw.jpg",
+      "https://res.cloudinary.com/djksfayfu/image/upload/v1791364570/7c986fa9c8fa42609064996588883d8b_bahwnj.jpg"
+    ];
+
+    document.querySelectorAll('.image-gallery-slide').forEach((slide, index) => {
+      slide.addEventListener('mouseenter', () => {
+        const nextIndex = (index + 1) % galleryImages.length;
+        const img = slide.querySelector('img');
+        img.style.transition = 'opacity 0.3s ease';
+        img.style.opacity = '0.7';
+        setTimeout(() => {
+          img.src = galleryImages[nextIndex];
+          img.style.opacity = '1';
+        }, 150);
+      });
+
+      slide.addEventListener('mouseleave', () => {
+        const img = slide.querySelector('img');
+        img.style.transition = 'opacity 0.3s ease';
+        img.style.opacity = '0.7';
+        setTimeout(() => {
+          img.src = galleryImages[index];
+          img.style.opacity = '1';
+        }, 150);
+      });
+    });
+
     function toggleGist() {
       document.getElementById('gistContainer').classList.toggle('show');
     }
