@@ -139,7 +139,7 @@
     <!-- date badge -->
     <div class="mb-6 fade-up">
       <span class="bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black px-5 py-2 rounded-full border-2 border-[#FFD700] text-xs font-bold tracking-wide shadow-lg">
-        🎉 15 May 2025 · Monday
+        🎉 <span id="currentDateBadge"></span>
       </span>
     </div>
 
@@ -368,11 +368,13 @@
   <script>
     // --- date setup ---
     const today = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('currentDateBadge').textContent = today.toLocaleDateString('en-US', options);
     document.getElementById('birthday-day').textContent = today.toLocaleDateString('en-US', { weekday: 'long' });
     document.getElementById('birthday-date').textContent = today.getDate();
     document.getElementById('birthday-month').textContent = today.toLocaleDateString('en-US', { month: 'long' });
     document.getElementById('birthday-year').textContent = today.getFullYear();
-    document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
 
     // --- image gallery hover effect ---
     const galleryImages = [
