@@ -31,7 +31,7 @@ SECRET_KEY = "django-insecure-s*k=#edp)%o-3gskhg$5b57a=a1hkrt+i87=ewjeig_mwa6jma
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['happy-birthda-elisha.vercel.app', 'localhost', '127.0.0.1']
 
 
 # Application definition
