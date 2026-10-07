@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday Vanster Joshua!</title>
+  <title>Happy Birthday Elisha Achiando!</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -36,12 +36,12 @@
       transform: translateX(-50%);
     }
     .photo-frame {
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       transition: all 0.3s ease;
     }
     .photo-frame:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
     .gist-container {
       max-height: 0;
@@ -59,11 +59,11 @@
       animation: float 3s ease-in-out infinite;
     }
     .wish-card {
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
     }
     .wish-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
     .dev-badge {
       transform: rotate(-5deg);
@@ -77,134 +77,166 @@
       width: 6px;
     }
     #wishes-container::-webkit-scrollbar-track {
-      background: #f9e6e6;
+      background: #f1f5f9;
     }
     #wishes-container::-webkit-scrollbar-thumb {
-      background-color: #f472b6;
+      background-color: #cbd5e1;
       border-radius: 20px;
+    }
+    #admin-wishes-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    #admin-wishes-container::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    #admin-wishes-container::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 20px;
+    }
+    .admin-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .admin-modal.show {
+      display: flex;
+    }
+    .stat-card {
+      transition: all 0.2s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
     }
   </style>
 </head>
-<body class="bg-gradient-to-r from-pink-100 via-orange-100 to-yellow-100 flex items-center justify-center min-h-screen p-4">
+<body class="bg-slate-50 flex items-center justify-center min-h-screen p-4">
 
-  <div class="text-center bg-white p-8 rounded-3xl shadow-2xl relative overflow-hidden max-w-3xl w-full animate__animated animate__pulse">
+  <div class="text-center bg-white p-8 rounded-2xl shadow-sm relative overflow-hidden max-w-3xl w-full border border-slate-200">
     <!-- Birthday Header with Date -->
-    <div class="mb-2 text-sm text-gray-500 font-medium">
-      <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full">🎉 Today's Celebration! 🎉</span>
+    <div class="mb-2 text-sm text-slate-500 font-medium">
+      <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full">🎉 Today's Celebration! 🎉</span>
     </div>
-    <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-500 mb-2">
+    <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-2">
       <span class="birthday-cake">🎂</span> Happy Birthday Vanster Joshua! <span class="birthday-cake">🎉</span>
     </h1>
-    <p class="text-orange-600 font-medium mb-4">From all of us at Kithunguri Site 3</p>
+    <p class="text-slate-600 font-medium mb-4">From all of us at Kithunguri Site 3</p>
     
     <!-- Photo Display -->
-    <div class="photo-frame bg-white rounded-xl p-2 mb-6 mx-auto max-w-xs border-2 border-pink-200">
-      <img id="birthdayPhoto" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+    <div class="photo-frame bg-white rounded-xl p-2 mb-6 mx-auto max-w-xs border border-slate-200">
+      <img id="birthdayPhoto" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
            alt="Birthday Photo" class="rounded-lg w-full h-auto cursor-pointer object-cover"
            onclick="changePhoto()">
-      <p class="text-sm text-gray-500 mt-1">Click photo to change • Shift+Click to upload</p>
+      <p class="text-sm text-slate-500 mt-1">Click photo to change • Shift+Click to upload</p>
     </div>
     
     <!-- Birthday Countdown -->
-    <div class="bg-gradient-to-r from-pink-50 to-orange-50 p-3 rounded-lg mb-6">
-      <p class="text-sm text-gray-600 mb-1">Celebrating on:</p>
+    <div class="bg-slate-50 p-3 rounded-lg mb-6 border border-slate-200">
+      <p class="text-sm text-slate-600 mb-1">Celebrating on:</p>
       <div class="flex justify-center gap-2">
-        <div class="bg-white p-2 rounded-lg shadow-sm">
-          <div class="font-bold text-pink-600" id="birthday-day">Monday</div>
-          <div class="text-xs text-gray-500">Day</div>
+        <div class="bg-white p-2 rounded-lg border border-slate-200">
+          <div class="font-bold text-slate-700" id="birthday-day">Monday</div>
+          <div class="text-xs text-slate-500">Day</div>
         </div>
-        <div class="bg-white p-2 rounded-lg shadow-sm">
-          <div class="font-bold text-pink-600" id="birthday-date">15</div>
-          <div class="text-xs text-gray-500">Date</div>
+        <div class="bg-white p-2 rounded-lg border border-slate-200">
+          <div class="font-bold text-slate-700" id="birthday-date">15</div>
+          <div class="text-xs text-slate-500">Date</div>
         </div>
-        <div class="bg-white p-2 rounded-lg shadow-sm">
-          <div class="font-bold text-pink-600" id="birthday-month">May</div>
-          <div class="text-xs text-gray-500">Month</div>
+        <div class="bg-white p-2 rounded-lg border border-slate-200">
+          <div class="font-bold text-slate-700" id="birthday-month">May</div>
+          <div class="text-xs text-slate-500">Month</div>
         </div>
-        <div class="bg-white p-2 rounded-lg shadow-sm">
-          <div class="font-bold text-pink-600" id="birthday-year">2025</div>
-          <div class="text-xs text-gray-500">Year</div>
+        <div class="bg-white p-2 rounded-lg border border-slate-200">
+          <div class="font-bold text-slate-700" id="birthday-year">2025</div>
+          <div class="text-xs text-slate-500">Year</div>
         </div>
       </div>
     </div>
     
     <!-- Birthday Message -->
     <div class="relative mb-6">
-      <p class="text-lg text-gray-700 mb-4 leading-relaxed">
-        <span class="music-note">🎵</span> Wishing you a day filled with joy, laughter, and all your favorite things! 
+      <p class="text-lg text-slate-700 mb-4 leading-relaxed">
+        <span class="music-note">🎵</span> Wishing you a day filled with joy, laughter, and all your favorite things!
         May this year bring you success and happiness beyond measure. <span class="music-note">🎶</span>
       </p>
-      <div class="absolute -top-3 -left-3 text-4xl text-pink-300">"</div>
-      <div class="absolute -bottom-3 -right-3 text-4xl text-pink-300">"</div>
+      <div class="absolute -top-3 -left-3 text-4xl text-slate-300">"</div>
+      <div class="absolute -bottom-3 -right-3 text-4xl text-slate-300">"</div>
     </div>
     
     <!-- Action Buttons -->
-    <div class="flex flex-wrap justify-center gap-4 mb-6">
-      <button onclick="showMessage()" class="bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2">
+    <div class="flex flex-wrap justify-center gap-3 mb-6">
+      <button onclick="showMessage()" class="bg-slate-800 hover:bg-slate-900 text-white py-2.5 px-6 rounded-lg transition-all duration-200 flex items-center gap-2 text-sm font-medium">
         <span class="animate-bounce">🎁</span> Click for a Surprise
       </button>
-      <button onclick="toggleGist()" class="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 text-white py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2">
+      <button onclick="toggleGist()" class="bg-slate-700 hover:bg-slate-800 text-white py-2.5 px-6 rounded-lg transition-all duration-200 flex items-center gap-2 text-sm font-medium">
         <span>💌</span> Birthday Message
       </button>
-      <button onclick="playBirthdaySong()" class="bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 text-white py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2">
+      <button onclick="playBirthdaySong()" class="bg-slate-700 hover:bg-slate-800 text-white py-2.5 px-6 rounded-lg transition-all duration-200 flex items-center gap-2 text-sm font-medium">
         <span>🎵</span> Play Song
       </button>
     </div>
     
     <!-- Birthday Gist -->
-    <div id="gistContainer" class="gist-container bg-gradient-to-br from-pink-50 to-orange-50 rounded-xl p-6 mb-6 text-left border border-pink-200">
-      <h3 class="font-bold text-2xl text-pink-700 mb-4 text-center">Dear Vanster Joshua,</h3>
-      <p class="text-gray-700 mb-3">
-        On this special day, all of us at Kithunguri Site 3 want you to know how much you're appreciated. 
+    <div id="gistContainer" class="gist-container bg-slate-50 rounded-xl p-6 mb-6 text-left border border-slate-200">
+      <h3 class="font-bold text-2xl text-slate-800 mb-4 text-center">Dear Vanster Joshua,</h3>
+      <p class="text-slate-700 mb-3">
+        On this special day, all of us at Kithunguri Site 3 want you to know how much you're appreciated.
         Your kindness, humor, and positive energy light up every room you enter.
       </p>
-      <p class="text-gray-700 mb-3">
-        May this year bring you closer to your dreams, surround you with love, 
+      <p class="text-slate-700 mb-3">
+        May this year bring you closer to your dreams, surround you with love,
         and fill your life with unforgettable moments. Keep shining bright!
       </p>
-      <div class="bg-white p-4 rounded-lg mb-3 border-l-4 border-pink-400">
-        <p class="text-gray-700 font-bold italic">
+      <div class="bg-white p-4 rounded-lg mb-3 border-l-4 border-slate-400">
+        <p class="text-slate-700 font-bold italic">
           "Wishing you health, wealth, and happiness today and always!"
         </p>
       </div>
       <div class="flex justify-between items-center mt-4">
         <div class="text-left">
-          <p class="text-pink-600 font-semibold">With warmest wishes,</p>
-          <p class="text-gray-600">Your Kithunguri Site 3 Family</p>
+          <p class="text-slate-700 font-semibold">With warmest wishes,</p>
+          <p class="text-slate-600">Your Kithunguri Site 3 Family</p>
         </div>
         <div class="text-right">
-          <p class="text-sm text-gray-500">Date: <span id="current-date"></span></p>
+          <p class="text-sm text-slate-500">Date: <span id="current-date"></span></p>
         </div>
       </div>
     </div>
 
     <!-- Social Sharing -->
-    <div class="bg-gray-50 p-4 rounded-lg mb-6">
-      <p class="text-gray-600 mb-3">Share this celebration:</p>
+    <div class="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200">
+      <p class="text-slate-600 mb-3 text-sm">Share this celebration:</p>
       <div class="flex justify-center gap-3">
-        <button onclick="shareOnFacebook()" class="bg-blue-600 text-white p-2 rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-700 transition">
+        <button onclick="shareOnFacebook()" class="bg-slate-700 text-white p-2 rounded-full w-10 h-10 flex items-center justify-center hover:bg-slate-800 transition">
           <span class="text-xl">f</span>
         </button>
-        <button onclick="shareOnTwitter()" class="bg-blue-400 text-white p-2 rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-500 transition">
+        <button onclick="shareOnTwitter()" class="bg-slate-700 text-white p-2 rounded-full w-10 h-10 flex items-center justify-center hover:bg-slate-800 transition">
           <span class="text-xl">𝕏</span>
         </button>
-        <button onclick="shareOnWhatsApp()" class="bg-green-500 text-white p-2 rounded-full w-10 h-10 flex items-center justify-center hover:bg-green-600 transition">
+        <button onclick="shareOnWhatsApp()" class="bg-slate-700 text-white p-2 rounded-full w-10 h-10 flex items-center justify-center hover:bg-slate-800 transition">
           <span class="text-xl">ⓦ</span>
         </button>
       </div>
     </div>
     
     <!-- NEW: Birthday Wishes Section -->
-    <div class="mb-6 bg-gradient-to-r from-pink-50 via-orange-50 to-yellow-50 p-6 rounded-xl border border-pink-200">
-      <h3 class="text-2xl font-bold text-pink-600 mb-4">Leave a Birthday Wish! 🎈</h3>
-      
+    <div class="mb-6 bg-slate-50 p-6 rounded-xl border border-slate-200">
+      <h3 class="text-2xl font-bold text-slate-800 mb-4">Leave a Birthday Wish! 🎈</h3>
+
       <div class="mb-4">
         <form id="wishForm" class="space-y-3">
+          {% csrf_token %}
           <div>
-            <input type="text" id="wishName" placeholder="Your Name" class="w-full p-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300" required>
+            <input type="text" id="wishName" placeholder="Your Name" class="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent" required>
           </div>
           <div>
-            <textarea id="wishMessage" placeholder="Your birthday wish for Vanster Joshua..." rows="3" class="w-full p-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300" required></textarea>
+            <textarea id="wishMessage" placeholder="Your birthday wish for Vanster Joshua..." rows="3" class="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent" required></textarea>
           </div>
           <div class="flex justify-between items-center">
             <div class="space-x-2">
@@ -214,57 +246,125 @@
               <button type="button" onclick="setEmoji('🎁')" class="text-xl hover:scale-125 transition-transform">🎁</button>
               <button type="button" onclick="setEmoji('✨')" class="text-xl hover:scale-125 transition-transform">✨</button>
             </div>
-            <button type="submit" class="bg-gradient-to-r from-pink-500 to-orange-500 text-white py-2 px-6 rounded-lg hover:from-pink-600 hover:to-orange-600 transition-all">
+            <button type="submit" class="bg-slate-800 text-white py-2 px-6 rounded-lg hover:bg-slate-900 transition-all">
               Send Wish
             </button>
           </div>
         </form>
       </div>
-      
-      <div class="bg-white rounded-xl p-4 shadow-sm">
-        <h4 class="font-semibold text-lg text-pink-600 mb-3">Birthday Wishes</h4>
-        <div id="wishes-container" class="space-y-3">
-          <div class="wish-card bg-gradient-to-r from-pink-50 to-orange-50 p-3 rounded-lg">
-            <div class="flex justify-between">
-              <p class="font-bold text-pink-600">Kithunguri Team</p>
-              <span class="text-gray-500 text-sm">Just now</span>
-            </div>
-            <p class="text-gray-700 mt-1">May your special day be filled with memories and flowers, friendship and happy hours! 🎂</p>
-          </div>
-        </div>
+
+      <div id="wishMessage" class="hidden bg-green-50 text-green-700 p-3 rounded-lg border border-green-200">
+        Your wish has been submitted successfully! �
       </div>
     </div>
     
     <!-- NEW: Developer Credits Section -->
-    <div class="mb-8 border-t pt-6 border-pink-100">
+    <div class="mb-8 border-t pt-6 border-slate-200">
       <div class="relative inline-block">
-        <div class="absolute -top-8 -right-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white text-xs py-1 px-3 rounded-full transform rotate-12 dev-badge">
-          With ❤️ 
+        <div class="absolute -top-8 -right-4 bg-slate-800 text-white text-xs py-1 px-3 rounded-full transform rotate-12 dev-badge">
+          With ❤️
         </div>
-        <div class="bg-gradient-to-r from-indigo-50 to-blue-50 p-4 rounded-lg inline-block">
-          <p class="text-gray-700">Developed by</p>
-          <h4 class="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+        <div class="bg-slate-50 p-4 rounded-lg inline-block border border-slate-200">
+          <p class="text-slate-700">Developed by</p>
+          <h4 class="text-lg font-bold text-slate-800">
             Bro Cascallen
           </h4>
-          <p class="text-xs text-gray-500 mt-1">Digital Birthday Experience Creator</p>
+          <p class="text-xs text-slate-500 mt-1">Digital Birthday Experience Creator</p>
         </div>
       </div>
+    </div>
+
+    <!-- Admin Button -->
+    <div class="mb-6">
+      <button onclick="openAdminModal()" class="text-slate-400 hover:text-slate-600 text-sm transition-colors">
+        🔒 Admin Panel
+      </button>
     </div>
     
     <!-- Balloons -->
     <div class="absolute -bottom-10 left-0 w-full flex justify-around h-40 pointer-events-none">
-      <div class="w-10 h-12 bg-red-500 rounded-full animate-[float_6s_ease-in-out_infinite] relative balloon"></div>
-      <div class="w-8 h-10 bg-blue-400 rounded-full animate-[float_7s_ease-in-out_infinite_1s] relative balloon"></div>
-      <div class="w-9 h-11 bg-green-400 rounded-full animate-[float_8s_ease-in-out_infinite_2s] relative balloon"></div>
-      <div class="w-7 h-9 bg-purple-400 rounded-full animate-[float_6.5s_ease-in-out_infinite_1.5s] relative balloon"></div>
-      <div class="w-10 h-12 bg-yellow-300 rounded-full animate-[float_7.5s_ease-in-out_infinite_3s] relative balloon"></div>
+      <div class="w-10 h-12 bg-slate-500 rounded-full animate-[float_6s_ease-in-out_infinite] relative balloon"></div>
+      <div class="w-8 h-10 bg-slate-400 rounded-full animate-[float_7s_ease-in-out_infinite_1s] relative balloon"></div>
+      <div class="w-9 h-11 bg-slate-300 rounded-full animate-[float_8s_ease-in-out_infinite_2s] relative balloon"></div>
+      <div class="w-7 h-9 bg-slate-600 rounded-full animate-[float_6.5s_ease-in-out_infinite_1.5s] relative balloon"></div>
+      <div class="w-10 h-12 bg-slate-400 rounded-full animate-[float_7.5s_ease-in-out_infinite_3s] relative balloon"></div>
     </div>
-    
+
     <!-- Music Player (hidden) -->
     <audio id="birthdaySong" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-    
+
     <!-- Confetti Canvas -->
     <canvas id="confetti-canvas" class="absolute top-0 left-0 w-full h-full pointer-events-none"></canvas>
+  </div>
+
+  <!-- Admin Modal -->
+  <div id="adminModal" class="admin-modal">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden">
+      <!-- Login View -->
+      <div id="adminLogin" class="p-8">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 text-center">Admin Panel</h2>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">Password</label>
+            <input type="password" id="adminPassword" placeholder="Enter admin password" class="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent">
+          </div>
+          <button onclick="loginAdmin()" class="w-full bg-slate-800 text-white py-3 rounded-lg hover:bg-slate-900 transition-colors font-medium">
+            Login
+          </button>
+          <button onclick="closeAdminModal()" class="w-full bg-slate-100 text-slate-700 py-3 rounded-lg hover:bg-slate-200 transition-colors font-medium">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <!-- Dashboard View -->
+      <div id="adminDashboard" class="hidden">
+        <div class="bg-slate-800 text-white p-6">
+          <div class="flex justify-between items-center">
+            <h2 class="text-2xl font-bold">Admin Dashboard</h2>
+            <button onclick="logoutAdmin()" class="text-slate-300 hover:text-white transition-colors text-sm">
+              Logout
+            </button>
+          </div>
+        </div>
+
+        <div class="p-6 overflow-y-auto max-h-[60vh]">
+          <!-- Statistics -->
+          <div class="grid grid-cols-3 gap-4 mb-6">
+            <div class="stat-card bg-slate-50 p-4 rounded-lg border border-slate-200 text-center">
+              <div class="text-3xl font-bold text-slate-800" id="totalWishes">0</div>
+              <div class="text-sm text-slate-600">Total Wishes</div>
+            </div>
+            <div class="stat-card bg-slate-50 p-4 rounded-lg border border-slate-200 text-center">
+              <div class="text-3xl font-bold text-slate-800" id="uniqueUsers">0</div>
+              <div class="text-sm text-slate-600">Unique Users</div>
+            </div>
+            <div class="stat-card bg-slate-50 p-4 rounded-lg border border-slate-200 text-center">
+              <div class="text-3xl font-bold text-slate-800" id="todayWishes">0</div>
+              <div class="text-sm text-slate-600">Today's Wishes</div>
+            </div>
+          </div>
+
+          <!-- Wishes List -->
+          <div class="bg-slate-50 rounded-lg border border-slate-200 p-4">
+            <h3 class="font-semibold text-slate-800 mb-4">All Birthday Wishes</h3>
+            <div id="admin-wishes-container" class="space-y-3 max-h-80 overflow-y-auto">
+              <!-- Wishes will be loaded here -->
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="mt-6 flex gap-3">
+            <button onclick="exportWishes()" class="flex-1 bg-slate-800 text-white py-2 rounded-lg hover:bg-slate-900 transition-colors text-sm font-medium">
+              Export Wishes
+            </button>
+            <button onclick="clearAllWishes()" class="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium">
+              Clear All Wishes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -311,15 +411,15 @@
     function showMessage() {
       // Show alert
       alert("🎉 Surprise from Kithunguri Site 3! May all your dreams come true. Happy Birthday, Vanster Joshua! 🎂💫");
-      
+
       // Trigger confetti
       confetti({
         particleCount: 200,
         spread: 90,
         origin: { y: 0.6 },
-        colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#ff9900']
+        colors: ['#334155', '#475569', '#64748b', '#94a3b8', '#cbd5e1']
       });
-      
+
       // Additional effects
       setTimeout(() => {
         confetti({
@@ -327,20 +427,20 @@
           angle: 60,
           spread: 70,
           origin: { x: 0 },
-          colors: ['#ff0000', '#ff9900', '#ffff00']
+          colors: ['#334155', '#475569', '#64748b']
         });
       }, 250);
-      
+
       setTimeout(() => {
         confetti({
           particleCount: 150,
           angle: 120,
           spread: 70,
           origin: { x: 1 },
-          colors: ['#00ff00', '#0000ff', '#ff00ff']
+          colors: ['#64748b', '#94a3b8', '#cbd5e1']
         });
       }, 400);
-      
+
       // Heart explosion
       setTimeout(() => {
         confetti({
@@ -348,7 +448,7 @@
           spread: 70,
           origin: { y: 0.5 },
           shapes: ['heart'],
-          colors: ['#ff0000', '#ff6699', '#ff99cc']
+          colors: ['#94a3b8', '#cbd5e1', '#e2e8f0']
         });
       }, 800);
     }
@@ -405,26 +505,18 @@
     // Add wish to the page
     function addWish(name, message, time = 'Just now') {
       const wishElement = document.createElement('div');
-      wishElement.className = 'wish-card bg-gradient-to-r from-pink-50 to-orange-50 p-3 rounded-lg';
-      
-      // Generate a random light background color
-      const hue = Math.floor(Math.random() * 50);
-      const fromColor = `from-${['pink', 'orange', 'yellow', 'blue', 'green', 'purple'][Math.floor(Math.random() * 6)]}-50`;
-      const toColor = `to-${['pink', 'orange', 'yellow', 'blue', 'green', 'purple'][Math.floor(Math.random() * 6)]}-50`;
-      
-      wishElement.classList.remove('from-pink-50', 'to-orange-50');
-      wishElement.classList.add(fromColor, toColor);
-      
+      wishElement.className = 'wish-card bg-slate-50 p-3 rounded-lg border border-slate-200';
+
       wishElement.innerHTML = `
         <div class="flex justify-between">
-          <p class="font-bold text-pink-600">${name}</p>
-          <span class="text-gray-500 text-sm">${time}</span>
+          <p class="font-bold text-slate-800">${name}</p>
+          <span class="text-slate-500 text-sm">${time}</span>
         </div>
-        <p class="text-gray-700 mt-1">${message}</p>
+        <p class="text-slate-700 mt-1">${message}</p>
       `;
-      
+
       wishesContainer.insertBefore(wishElement, wishesContainer.firstChild);
-      
+
       // Small animation effect
       setTimeout(() => {
         wishElement.style.opacity = '0';
@@ -432,7 +524,7 @@
         wishElement.style.opacity = '1';
         wishElement.style.transform = 'translateY(0)';
       }, 10);
-      
+
       // Save to localStorage
       saveWishes();
     }
@@ -442,11 +534,11 @@
       const wishes = [];
       document.querySelectorAll('.wish-card').forEach(card => {
         const name = card.querySelector('.font-bold').textContent;
-        const message = card.querySelector('.text-gray-700').textContent;
-        const time = card.querySelector('.text-gray-500').textContent;
-        wishes.push({ name, message, time });
+        const message = card.querySelector('.text-slate-700').textContent;
+        const time = card.querySelector('.text-slate-500').textContent;
+        wishes.push({ name, message, time, timestamp: Date.now() });
       });
-      
+
       localStorage.setItem('birthdayWishes', JSON.stringify(wishes));
     }
     
@@ -459,7 +551,7 @@
         while (wishesContainer.children.length > 1) {
           wishesContainer.removeChild(wishesContainer.lastChild);
         }
-        
+
         // Add saved wishes
         wishes.forEach(wish => {
           if (wish.name !== 'Kithunguri Team') { // Don't duplicate the default
@@ -487,7 +579,7 @@
           particleCount: 50,
           spread: 40,
           origin: { y: 0.8 },
-          colors: ['#ff6699', '#ff99cc', '#ffcc99']
+          colors: ['#64748b', '#94a3b8', '#cbd5e1']
         });
       }
     });
@@ -497,9 +589,146 @@
       setTimeout(() => {
         showMessage();
       }, 1000);
-      
+
       // Load saved wishes
       loadWishes();
+    });
+
+    // Admin Panel Functions
+    const ADMIN_PASSWORD = 'vanstar2025'; // Change this to your desired password
+
+    function openAdminModal() {
+      document.getElementById('adminModal').classList.add('show');
+      document.getElementById('adminLogin').classList.remove('hidden');
+      document.getElementById('adminDashboard').classList.add('hidden');
+      document.getElementById('adminPassword').value = '';
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.remove('show');
+    }
+
+    function loginAdmin() {
+      const password = document.getElementById('adminPassword').value;
+      if (password === ADMIN_PASSWORD) {
+        document.getElementById('adminLogin').classList.add('hidden');
+        document.getElementById('adminDashboard').classList.remove('hidden');
+        loadAdminDashboard();
+      } else {
+        alert('Incorrect password. Please try again.');
+        document.getElementById('adminPassword').value = '';
+      }
+    }
+
+    function logoutAdmin() {
+      document.getElementById('adminLogin').classList.remove('hidden');
+      document.getElementById('adminDashboard').classList.add('hidden');
+      document.getElementById('adminPassword').value = '';
+    }
+
+    function loadAdminDashboard() {
+      const wishes = JSON.parse(localStorage.getItem('birthdayWishes') || '[]');
+
+      // Calculate statistics
+      const totalWishes = wishes.length;
+      const uniqueUsers = new Set(wishes.map(w => w.name)).size;
+      const today = new Date().toDateString();
+      const todayWishes = wishes.filter(w => {
+        const wishDate = new Date(w.timestamp || Date.now()).toDateString();
+        return wishDate === today;
+      }).length;
+
+      document.getElementById('totalWishes').textContent = totalWishes;
+      document.getElementById('uniqueUsers').textContent = uniqueUsers;
+      document.getElementById('todayWishes').textContent = todayWishes;
+
+      // Load wishes into admin container
+      const adminContainer = document.getElementById('admin-wishes-container');
+      adminContainer.innerHTML = '';
+
+      if (wishes.length === 0) {
+        adminContainer.innerHTML = '<p class="text-slate-500 text-center py-4">No wishes yet</p>';
+        return;
+      }
+
+      wishes.forEach((wish, index) => {
+        const wishElement = document.createElement('div');
+        wishElement.className = 'bg-white p-3 rounded-lg border border-slate-200';
+        wishElement.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <p class="font-semibold text-slate-800">${wish.name}</p>
+              <p class="text-slate-600 text-sm mt-1">${wish.message}</p>
+              <p class="text-slate-400 text-xs mt-2">${wish.time}</p>
+            </div>
+            <button onclick="deleteWish(${index})" class="text-red-500 hover:text-red-700 text-sm ml-2">
+              Delete
+            </button>
+          </div>
+        `;
+        adminContainer.appendChild(wishElement);
+      });
+    }
+
+    function deleteWish(index) {
+      if (confirm('Are you sure you want to delete this wish?')) {
+        const wishes = JSON.parse(localStorage.getItem('birthdayWishes') || '[]');
+        wishes.splice(index, 1);
+        localStorage.setItem('birthdayWishes', JSON.stringify(wishes));
+
+        // Reload both views
+        loadWishes();
+        loadAdminDashboard();
+      }
+    }
+
+    function exportWishes() {
+      const wishes = JSON.parse(localStorage.getItem('birthdayWishes') || '[]');
+      if (wishes.length === 0) {
+        alert('No wishes to export');
+        return;
+      }
+
+      const csvContent = "data:text/csv;charset=utf-8," +
+        "Name,Message,Time\n" +
+        wishes.map(w => `"${w.name}","${w.message}","${w.time}"`).join("\n");
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "birthday_wishes.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function clearAllWishes() {
+      if (confirm('Are you sure you want to delete ALL wishes? This cannot be undone.')) {
+        localStorage.removeItem('birthdayWishes');
+
+        // Reload the main wishes container
+        wishesContainer.innerHTML = `
+          <div class="wish-card bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <div class="flex justify-between">
+              <p class="font-bold text-slate-800">Kithunguri Team</p>
+              <span class="text-slate-500 text-sm">Just now</span>
+            </div>
+            <p class="text-slate-700 mt-1">May your special day be filled with memories and flowers, friendship and happy hours! 🎂</p>
+          </div>
+        `;
+
+        // Reload admin dashboard
+        loadAdminDashboard();
+
+        alert('All wishes have been cleared');
+      }
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('adminModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeAdminModal();
+      }
     });
   </script>
 </body>
