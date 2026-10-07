@@ -10,7 +10,11 @@ from .models import BirthdayWish
 
 def home(request):
     """Main birthday page"""
-    return render(request, 'birthday/home.html')
+    wishes = BirthdayWish.objects.all().order_by('-created_at')
+    context = {
+        'wishes': wishes,
+    }
+    return render(request, 'birthday/home.html', context)
 
 
 @csrf_exempt

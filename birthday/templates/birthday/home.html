@@ -297,6 +297,7 @@
 
       <div class="mb-5">
         <form id="wishForm" class="space-y-3">
+          {% csrf_token %}
           <div>
             <input type="text" id="wishName" placeholder="Your name"
                    class="w-full p-4 border-2 border-[#1E90FF] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FFD700] focus:border-transparent bg-white text-sm shadow-lg font-semibold"
@@ -325,13 +326,17 @@
       </div>
 
       <div id="wishes-container" class="space-y-3 max-h-[300px] overflow-y-auto pr-1">
+        {% for wish in wishes %}
         <div class="wish-card bg-white p-4 rounded-2xl border-2 border-[#FFD700] shadow-lg">
           <div class="flex justify-between">
-            <p class="font-bold text-black">Birthday Team</p>
-            <span class="text-blue-800 text-xs font-semibold">Just now</span>
+            <p class="font-bold text-black">{{ wish.name }}</p>
+            <span class="text-blue-800 text-xs font-semibold">{{ wish.created_at|date:"M d, Y H:i" }}</span>
           </div>
-          <p class="text-blue-900 font-medium mt-1 text-sm">May your special day be filled with memories and flowers, friendship and happy hours! 🎂</p>
+          <p class="text-blue-900 font-medium mt-1 text-sm">{{ wish.message }}</p>
         </div>
+        {% empty %}
+        <p class="text-blue-800 text-center py-4 font-semibold">No wishes yet. Be the first to send one! 🎂</p>
+        {% endfor %}
       </div>
     </div>
 
@@ -412,7 +417,6 @@
 
     // --- wishes system ---
     const wishForm = document.getElementById('wishForm');
-    const wishesContainer = document.getElementById('wishes-container');
     const submitBtn = document.getElementById('submitWishBtn');
     const wishFormMessage = document.getElementById('wishFormMessage');
 
@@ -432,37 +436,6 @@
       textarea.focus();
     }
 
-    function addWish(name, message, time = 'Just now') {
-      const wishElement = document.createElement('div');
-      wishElement.className = 'wish-card bg-white p-4 rounded-2xl border border-[#e2eff7] shadow-sm';
-      wishElement.innerHTML = `
-        <div class="flex justify-between">
-          <p class="font-medium text-slate-700">${name}</p>
-          <span class="text-slate-400 text-xs">${time}</span>
-        </div>
-        <p class="text-slate-500 font-light mt-1 text-sm">${message}</p>
-      `;
-      wishesContainer.insertBefore(wishElement, wishesContainer.firstChild);
-    }
-
-    function loadWishes() {
-      const stored = JSON.parse(localStorage.getItem('birthdayWishes') || '[]');
-      wishesContainer.innerHTML = '';
-      if (stored.length === 0) {
-        wishesContainer.innerHTML = `
-          <div class="wish-card bg-white p-4 rounded-2xl border border-[#e2eff7] shadow-sm">
-            <div class="flex justify-between">
-              <p class="font-medium text-slate-700">Birthday Team</p>
-              <span class="text-slate-400 text-xs">Just now</span>
-            </div>
-            <p class="text-slate-500 font-light mt-1 text-sm">May your special day be filled with memories and flowers, friendship and happy hours! 🎂</p>
-          </div>
-        `;
-        return;
-      }
-      stored.forEach(w => addWish(w.name, w.message, w.time || 'Just now'));
-    }
-
     wishForm.addEventListener('submit', function(e) {
       e.preventDefault();
       const name = document.getElementById('wishName').value.trim();
@@ -476,24 +449,38 @@
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
 
-      setTimeout(() => {
-        const wishes = JSON.parse(localStorage.getItem('birthdayWishes') || '[]');
-        wishes.push({ name, message, time: 'Just now', timestamp: Date.now() });
-        localStorage.setItem('birthdayWishes', JSON.stringify(wishes));
+      // Get CSRF token
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
 
-        showFormMessage('Wish submitted successfully! 🎉', 'success');
-        document.getElementById('wishName').value = '';
-        document.getElementById('wishMessage').value = '';
-        loadWishes();
-
-        confetti({ particleCount: 40, spread: 40, origin: { y: 0.8 }, colors: ['#b0d4e8', '#c2ddee'] });
-
+      fetch('/submit-wish/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({ name, message })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          showFormMessage('Wish submitted successfully! 🎉', 'success');
+          document.getElementById('wishName').value = '';
+          document.getElementById('wishMessage').value = '';
+          // Reload page to show new wish
+          setTimeout(() => location.reload(), 1000);
+          confetti({ particleCount: 40, spread: 40, origin: { y: 0.8 }, colors: ['#b0d4e8', '#c2ddee'] });
+        } else {
+          showFormMessage(data.message || 'Error submitting wish', 'error');
+        }
+      })
+      .catch(error => {
+        showFormMessage('Error submitting wish. Please try again.', 'error');
+      })
+      .finally(() => {
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
-      }, 300);
+      });
     });
-
-    document.addEventListener('DOMContentLoaded', loadWishes);
   </script>
 </body>
 </html>
