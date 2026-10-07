@@ -96,5 +96,5 @@ def app(request, context):
     return {
         "statusCode": status_code,
         "headers": headers_dict,
-        "body": body.decode("utf-8", errors="replace"),
+        "body": body,
     }
