@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-s*k=#edp)%o-3gskhg$5b57a=a1hkrt+i87=ewjeig_mwa6jma"
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-s*k=#edp)%o-3gskhg$5b57a=a1hkrt+i87=ewjeig_mwa6jma")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",") if os.environ.get("ALLOWED_HOSTS") else ["*"]
 
 
 # Application definition
@@ -77,14 +77,13 @@ WSGI_APPLICATION = "birthday_project.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "neondb",
-        "USER": "neondb_owner",
-        "PASSWORD": "npg_ZunX81JDjgKH",
-        "HOST": "ep-delicate-term-b494qpvg-pooler.c-6.us-east-2.aws.neon.tech",
-        "PORT": "5432",
+        "NAME": os.environ.get("DB_NAME", "neondb"),
+        "USER": os.environ.get("DB_USER", "neondb_owner"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "npg_ZunX81JDjgKH"),
+        "HOST": os.environ.get("DB_HOST", "ep-delicate-term-b494qpvg-pooler.c-6.us-east-2.aws.neon.tech"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
         "OPTIONS": {
             "sslmode": "require",
-            "channel_binding": "require",
         },
     }
 }
