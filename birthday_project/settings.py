@@ -73,10 +73,18 @@ WSGI_APPLICATION = "birthday_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
+import os
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "neondb",
+        "USER": "neondb_owner",
+        "PASSWORD": "npg_ZunX81JDjgKH",
+        "HOST": "ep-delicate-term-b494qpvg-pooler.c-6.us-east-2.aws.neon.tech",
+        "PORT": "5432",
+        "SSL": "require",
+        "CHANNEL_BINDING": "require",
     }
 }
 
