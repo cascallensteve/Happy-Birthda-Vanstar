@@ -1,6 +1,5 @@
 """
 Vercel serverless entry point for Django application.
-This file is used by @vercel/python to serve the Django WSGI application.
 """
 import os
 import sys
@@ -13,20 +12,31 @@ sys.path.insert(0, str(BASE_DIR))
 # Set the Django settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "birthday_project.settings")
 
-from django.core.wsgi import get_wsgi_application
 
-application = get_wsgi_application()
-
-# Vercel handler
 def handler(request, context):
     """
     Vercel serverless function handler.
-    Converts the Vercel request to WSGI environ and returns the response.
+    Lazily initializes Django on first request.
     """
+    import django
+    from django.core.wsgi import get_wsgi_application
     from io import BytesIO
     from django.core.handlers.wsgi import WSGIRequest
-    
+
+    # Initialize Django only once
+    if not hasattr(handler, '_app'):
+        django.setup(set_prefix=False)
+        handler._app = get_wsgi_application()
+
     # Build WSGI environ from Vercel request
+    body_data = request.get("body")
+    if isinstance(body_data, str):
+        body_bytes = body_data.encode()
+    elif isinstance(body_data, bytes):
+        body_bytes = body_data
+    else:
+        body_bytes = b""
+
     environ = {
         "REQUEST_METHOD": request.get("method", "GET"),
         "SCRIPT_NAME": "",
@@ -37,16 +47,13 @@ def handler(request, context):
         "SERVER_PROTOCOL": "HTTP/1.1",
         "wsgi.version": (1, 0),
         "wsgi.url_scheme": "https",
-        "wsgi.input": BytesIO(
-            request.get("body", b"") if isinstance(request.get("body"), bytes)
-            else (request.get("body", "").encode() if request.get("body") else b"")
-        ),
+        "wsgi.input": BytesIO(body_bytes),
         "wsgi.errors": sys.stderr,
         "wsgi.multithread": True,
         "wsgi.multiprocess": False,
         "wsgi.run_once": False,
     }
-    
+
     # Add headers
     for key, value in (request.get("headers") or {}).items():
         key = key.upper().replace("-", "_")
@@ -56,36 +63,36 @@ def handler(request, context):
             environ["CONTENT_LENGTH"] = value
         else:
             environ[f"HTTP_{key}"] = value
-    
+
     # Capture response
     response_status = []
     response_headers = []
     response_body = []
-    
+
     def start_response(status, headers, exc_info=None):
         response_status.append(status)
         response_headers.extend(headers)
-    
+
     # Run the WSGI application
-    result = application(environ, start_response)
-    
+    result = handler._app(environ, start_response)
+
     # Collect body
     for chunk in result:
         if isinstance(chunk, bytes):
             response_body.append(chunk)
         else:
             response_body.append(chunk.encode())
-    
+
     body = b"".join(response_body)
-    
+
     # Parse status code
     status_code = int(response_status[0].split()[0]) if response_status else 200
-    
+
     # Build headers dict
     headers_dict = {}
     for key, value in response_headers:
         headers_dict[key] = value
-    
+
     return {
         "statusCode": status_code,
         "headers": headers_dict,

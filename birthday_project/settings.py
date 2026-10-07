@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -73,8 +74,6 @@ WSGI_APPLICATION = "birthday_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-import os
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -83,8 +82,10 @@ DATABASES = {
         "PASSWORD": "npg_ZunX81JDjgKH",
         "HOST": "ep-delicate-term-b494qpvg-pooler.c-6.us-east-2.aws.neon.tech",
         "PORT": "5432",
-        "SSL": "require",
-        "CHANNEL_BINDING": "require",
+        "OPTIONS": {
+            "sslmode": "require",
+            "channel_binding": "require",
+        },
     }
 }
 
