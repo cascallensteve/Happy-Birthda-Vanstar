@@ -13,7 +13,7 @@ sys.path.insert(0, str(BASE_DIR))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "birthday_project.settings")
 
 
-def handler(request, context):
+def app(request, context):
     """
     Vercel serverless function handler.
     Lazily initializes Django on first request.
@@ -24,9 +24,9 @@ def handler(request, context):
     from django.core.handlers.wsgi import WSGIRequest
 
     # Initialize Django only once
-    if not hasattr(handler, '_app'):
+    if not hasattr(app, '_app'):
         django.setup(set_prefix=False)
-        handler._app = get_wsgi_application()
+        app._app = get_wsgi_application()
 
     # Build WSGI environ from Vercel request
     body_data = request.get("body")
@@ -74,7 +74,7 @@ def handler(request, context):
         response_headers.extend(headers)
 
     # Run the WSGI application
-    result = handler._app(environ, start_response)
+    result = app._app(environ, start_response)
 
     # Collect body
     for chunk in result:
