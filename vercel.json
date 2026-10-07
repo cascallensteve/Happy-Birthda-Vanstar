@@ -15,12 +15,6 @@
   "env": {
     "DJANGO_SETTINGS_MODULE": "birthday_project.settings",
     "DJANGO_DEBUG": "False",
-    "DJANGO_SECRET_KEY": "8jB27Kf1hQZRWUPEwQNtSGWFTOJNRZBZx7Q1dUp4Y2FHxhzGvAe2IYDRASkEFRpHdU4",
-    "DB_NAME": "neondb",
-    "DB_USER": "neondb_owner",
-    "DB_PASSWORD": "npg_ZunX81JDjgKH",
-    "DB_HOST": "ep-delicate-term-b494qpvg-pooler.c-6.us-east-2.aws.neon.tech",
-    "DB_PORT": "5432",
-    "ALLOWED_HOSTS": "*"
+    "DJANGO_SECRET_KEY": "8jB27Kf1hQZRWUPEwQNtSGWFTOJNRZBZx7Q1dUp4Y2FHxhzGvAe2IYDRASkEFRpHdU4"
   }
 }
